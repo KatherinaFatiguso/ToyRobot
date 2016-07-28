@@ -1,0 +1,26 @@
+<%= simple_form_for(@robot) do |f| %>
+  <% if @robot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@robot.errors.count, "error") %> prohibited this robot from being saved:</h2>
+
+      <ul>
+      <% @robot.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.input :x %><br>
+  </div>
+  <div class="field">
+    <%= f.input :y %><br>
+  </div>
+  <div class="field">
+    <%= f.input :f, collection: [ "NORTH", "EAST", "SOUTH", "WEST"] %><br>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
