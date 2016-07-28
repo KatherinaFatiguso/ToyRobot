@@ -37,7 +37,19 @@ class Robot < ActiveRecord::Base
   end
 
   def left
-
+    if self.f == "NORTH"
+      self.f = "WEST"
+      self.save!
+    elsif self.f == "WEST"
+      self.f = "SOUTH"
+      self.save!
+    elsif self.f == "SOUTH"
+      self.f = "EAST"
+      self.save!
+    elsif self.f == "EAST"
+      self.f = "NORTH"
+      self.save!
+    end
   end
 
   def right
