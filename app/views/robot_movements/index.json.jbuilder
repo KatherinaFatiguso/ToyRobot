@@ -1,0 +1,1 @@
+json.array! @robot_movements, partial: 'robot_movements/robot_movement', as: :robot_movement

@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728014720) do
+ActiveRecord::Schema.define(version: 20160729041116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "movements", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "robot_movements", force: :cascade do |t|
+    t.integer  "robot_id"
+    t.integer  "movement_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "robot_movements", ["movement_id"], name: "index_robot_movements_on_movement_id", using: :btree
+  add_index "robot_movements", ["robot_id"], name: "index_robot_movements_on_robot_id", using: :btree
 
   create_table "robots", force: :cascade do |t|
     t.integer  "x",          default: 0
@@ -24,4 +40,6 @@ ActiveRecord::Schema.define(version: 20160728014720) do
     t.datetime "updated_at",                  null: false
   end
 
+  add_foreign_key "robot_movements", "movements"
+  add_foreign_key "robot_movements", "robots"
 end

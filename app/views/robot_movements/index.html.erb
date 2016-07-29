@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Robot Movements</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Robot</th>
+      <th>Movement</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @robot_movements.each do |robot_movement| %>
+      <tr>
+        <td><%= robot_movement.robot %></td>
+        <td><%= robot_movement.movement %></td>
+        <td><%= link_to 'Show', robot_movement %></td>
+        <td><%= link_to 'Edit', edit_robot_movement_path(robot_movement) %></td>
+        <td><%= link_to 'Destroy', robot_movement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Robot movement', new_robot_movement_path %>

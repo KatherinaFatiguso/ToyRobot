@@ -1,19 +1,52 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>X:</strong>
-  <%= @robot.x %>
+  <strong>X:</strong> <%= @robot.x %>, <strong>Y:</strong> <%= @robot.y %>, <strong>F:</strong> <%= @robot.f %>
 </p>
+<%# track = ['PLACE ', @robot.x, ', ', @robot.y, ', ', @robot.f].compact.join('') %>
+<br>
+<% i = 0 %>
+  <% while( i < 1 ) %>
+    <%= link_to 'Move', move_robot_path, class: 'btn' %> | <%= link_to 'Left', left_robot_path, class: 'btn' %> | <%= link_to 'Right', right_robot_path, class: 'btn' %>
+    <br>
+    <%= link_to 'Place', place_robot_path(reset: 'new_place') %>
+    <br>
 
-<p>
-  <strong>Y:</strong>
-  <%= @robot.y %>
-</p>
+    <%= form_tag(place_robot_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :x, params[:x], placeholder: "X position" %>
+      <%= text_field_tag :y, params[:y], placeholder: "Y position" %>
+      <div class="radio">
+        <label>
+          <input type="radio" name="f" id= value="NORTH" checked>
+          NORTH
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="f" id="f" value="EAST">
+          EAST
+          </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="f" id="f" value="SOUTH">
+          SOUTH
+          </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="f" id="f" value="WEST">
+          WEST
+          </label>
+      </div>
+      <%= submit_tag "Save" %>
+    <% end %>
 
-<p>
-  <strong>F:</strong>
-  <%= @robot.f %>
-</p>
-
-<%= link_to 'Edit', edit_robot_path(@robot) %> |
-<%= link_to 'Back', robots_path %>
+    <% i+= 1 %>
+  <% end %>
+  mm
+  <% @robot.movements.each do |m| %>
+    <%= m.name %>
+  <% end %>
+  nn
+  <%= @robot.report %>
