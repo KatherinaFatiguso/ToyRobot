@@ -1,5 +1,5 @@
 class Robot < ActiveRecord::Base
-  has_many :robot_movements, dependent: :delete_all
+  has_many :robot_movements, dependent: :destroy
   has_many :movements, through: :robot_movements
 
   validates :x, :y, :f, presence: true
@@ -16,6 +16,6 @@ class Robot < ActiveRecord::Base
     }
 
   def report
-    "Output: #{self.x}, #{self.y}, #{self.f}"
+    "REPORT output: #{self.x}, #{self.y}, #{self.f}"
   end
 end

@@ -66,16 +66,19 @@ class RobotsController < ApplicationController
     if (params[:x].to_i >= 0) && (params[:x].to_i <= 4) && (params[:y].to_i >= 0) && (params[:y].to_i <= 4)
       @robot.x = params[:x].to_i
       @robot.y = params[:y].to_i
-      @robot.f = params[:f]
-      @robot.save!
-      if @robot.movements.present?
-        @string = ['PLACE ', @robot.x, ', ', @robot.y, ', ', @robot.f].compact.join('')
-        @robot.movements.delete_all
-        @robot.movements.create!(name: @string)
-        
+      if params[:f].present?
+        @robot.f = params[:f]
       else
-
+        @robot.f = "EAST"
       end
+      # If @robot has any movements attached to it, it will delete all the movements attached to it and create a new one.
+      if @robot.movements.present?
+        @robot.movements.each(&:destroy) # Delete all movements attached to the @robot.
+      end
+      @position = ['PLACE ', @robot.x, ', ', @robot.y, ', ', @robot.f].compact.join('')
+      @new_movement = Movement.create!(name: @position)
+      @robot.movements << @new_movement
+      @robot.save!
     end
     redirect_to @robot
   end
@@ -83,15 +86,23 @@ class RobotsController < ApplicationController
   def move
     if (@robot.f == "NORTH") && (@robot.y < 4)
       @robot.y += 1
+      @new_movement = Movement.create!(name: 'MOVE ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif (@robot.f == "SOUTH") && (@robot.y > 0)
       @robot.y -= 1
+      @new_movement = Movement.create!(name: 'MOVE ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif (@robot.f == "EAST") && (@robot.x < 4)
       @robot.x += 1
+      @new_movement = Movement.create!(name: 'MOVE ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif (@robot.f == "WEST") && (@robot.x > 0)
       @robot.x -= 1
+      @new_movement = Movement.create!(name: 'MOVE ')
+      @robot.movements << @new_movement
       @robot.save!
     end
     redirect_to @robot
@@ -100,15 +111,23 @@ class RobotsController < ApplicationController
   def left
     if @robot.f == "NORTH"
       @robot.f = "WEST"
+      @new_movement = Movement.create!(name: 'LEFT ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif @robot.f == "WEST"
       @robot.f = "SOUTH"
+      @new_movement = Movement.create!(name: 'LEFT ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif @robot.f == "SOUTH"
       @robot.f = "EAST"
+      @new_movement = Movement.create!(name: 'LEFT ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif @robot.f == "EAST"
       @robot.f = "NORTH"
+      @new_movement = Movement.create!(name: 'LEFT ')
+      @robot.movements << @new_movement
       @robot.save!
     end
     redirect_to @robot
@@ -117,15 +136,23 @@ class RobotsController < ApplicationController
   def right
     if @robot.f == "NORTH"
       @robot.f = "EAST"
+      @new_movement = Movement.create!(name: 'RIGHT ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif @robot.f == "EAST"
       @robot.f = "SOUTH"
+      @new_movement = Movement.create!(name: 'RIGHT ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif @robot.f == "SOUTH"
       @robot.f = "WEST"
+      @new_movement = Movement.create!(name: 'RIGHT ')
+      @robot.movements << @new_movement
       @robot.save!
     elsif @robot.f == "WEST"
       @robot.f = "NORTH"
+      @new_movement = Movement.create!(name: 'RIGHT ')
+      @robot.movements << @new_movement
       @robot.save!
     end
     redirect_to @robot

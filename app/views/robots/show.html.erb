@@ -1,52 +1,53 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <h4>Toy Robot</h4>
   <strong>X:</strong> <%= @robot.x %>, <strong>Y:</strong> <%= @robot.y %>, <strong>F:</strong> <%= @robot.f %>
 </p>
-<%# track = ['PLACE ', @robot.x, ', ', @robot.y, ', ', @robot.f].compact.join('') %>
+
 <br>
-<% i = 0 %>
-  <% while( i < 1 ) %>
-    <%= link_to 'Move', move_robot_path, class: 'btn' %> | <%= link_to 'Left', left_robot_path, class: 'btn' %> | <%= link_to 'Right', right_robot_path, class: 'btn' %>
-    <br>
-    <%= link_to 'Place', place_robot_path(reset: 'new_place') %>
-    <br>
+Please select Robot's action from the list:
+<br>
+<%= link_to 'Move', move_robot_path, class: 'btn' %> | <%= link_to 'Left', left_robot_path, class: 'btn' %> | <%= link_to 'Right', right_robot_path, class: 'btn' %> | <%= link_to 'Place', place_robot_path(reset: 'new_place') %>
+<br><br>
+Or, enter the new Place position:
+<br>
+<%= form_tag(place_robot_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :x, params[:x], placeholder: "X position" %>
+  <%= text_field_tag :y, params[:y], placeholder: "Y position" %>
+  <div class="radio">
+    <label>
+      <input type="radio" name="f" id= value="NORTH">  <%# checked %>
+      NORTH
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="f" id="f" value="EAST">
+      EAST
+      </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="f" id="f" value="SOUTH">
+      SOUTH
+      </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="f" id="f" value="WEST">
+      WEST
+      </label>
+  </div>
+  <%= submit_tag "Save" %>
+<% end %>
 
-    <%= form_tag(place_robot_path, :method => "get", id: "search-form") do %>
-      <%= text_field_tag :x, params[:x], placeholder: "X position" %>
-      <%= text_field_tag :y, params[:y], placeholder: "Y position" %>
-      <div class="radio">
-        <label>
-          <input type="radio" name="f" id= value="NORTH" checked>
-          NORTH
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="f" id="f" value="EAST">
-          EAST
-          </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="f" id="f" value="SOUTH">
-          SOUTH
-          </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="f" id="f" value="WEST">
-          WEST
-          </label>
-      </div>
-      <%= submit_tag "Save" %>
+<br>
+  <%= @robot.movements[0].name %><%# Prints the 1st item in the associated movement records %>
+  <%# If there is more than one items in the associated movement array, print from the 2nd item in the associated movement records %>
+  <% if @robot.movements.count > 1 %>
+    <% @robot.movements[1..(@robot.movements.length - 1)].reverse.each do |m| %>
+      <%= m.name %>
     <% end %>
-
-    <% i+= 1 %>
   <% end %>
-  mm
-  <% @robot.movements.each do |m| %>
-    <%= m.name %>
-  <% end %>
-  nn
   <%= @robot.report %>
