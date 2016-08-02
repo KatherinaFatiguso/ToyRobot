@@ -2,7 +2,7 @@ class Robot < ActiveRecord::Base
   has_many :robot_movements, dependent: :destroy
   has_many :movements, through: :robot_movements
 
-  validates :x, :y, :f, presence: true
+  validates_presence_of :x, :y, :f
   validates :x, numericality: {
     only_integer: true,
     greater_than_or_equal_to: 0,
