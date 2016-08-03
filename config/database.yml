@@ -27,15 +27,15 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: myapp_development
+  database: toyrobot_development
   pool: 5
-  username: katherinafatiguso
+  username: toyrobotuser
   password:
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: myapp_test
+  database: toyrobot_test
   pool: 5
-  username: katherinafatiguso
-  password: 
+  username: toyrobotuser
+  password:
