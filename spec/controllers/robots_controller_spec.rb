@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe RobotsController, type: :controller do
-  render_views
-  let!(:robot) { Robot.new }
+  context "place" do
+    subject{ Robot.new }
 
-  describe '#place' do
-    before { get :place, :x => 0, :y => 0, :f => "EAST" }
-    it { expect(robot.x).to eq(0) }
-    it { expect(robot.y).to eq(0) }
-    it { expect(robot.f).to eq("EAST") }
+    describe 'GET #place' do
+      it "should be moved to the specifid location" do
+        get :place,  :id => subject.id, :x => 0, :y => 0, :f => 'NORTH'
+        expect(subject.x).to eq(0)
+      end
+    end
   end
 end
