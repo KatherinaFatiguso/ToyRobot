@@ -52,3 +52,8 @@ b) PLACE 0,0,NORTH LEFT REPORT Output: 0,0,WEST
 c) PLACE 1,2,EAST MOVE MOVE LEFT MOVE REPORT Output: 3,3,NORTH
 
 Deliverables: The Ruby source files, the test data and any test code. It is not required to provide any graphical output showing the movement of the toy robot.
+
+There are 2 tables: robots and movements.
+Robots table is to store the current coordinate (x,y,f) of the robot and the Movement table is to store the name of the actions that have been performed on the robot.
+A robot can have many movements.
+These list of actions will be destroyed if the player pressed the 'Place to Origin' button and it will start again by positioning the robot on the origin (0,0, EAST).
